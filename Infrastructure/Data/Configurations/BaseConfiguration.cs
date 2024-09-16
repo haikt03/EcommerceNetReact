@@ -10,8 +10,8 @@ namespace Infrastructure.Data.Configurations
         {
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id).ValueGeneratedOnAdd();
-            builder.Property(e => e.CreatedDate).IsRequired();
-            builder.Property(e => e.ModifiedDate).IsRequired(false);
+            builder.Property(e => e.CreatedAt).IsRequired();
+            builder.Property(e => e.ModifiedAt).IsRequired(false);
         }
     }
 }

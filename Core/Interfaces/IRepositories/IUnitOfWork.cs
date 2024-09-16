@@ -1,5 +1,5 @@
 ﻿
-using Core.Interfaces.Repositories;
+using Core.Interfaces.IRepositories;
 
 namespace Core.Interfaces.IRepositories
 {

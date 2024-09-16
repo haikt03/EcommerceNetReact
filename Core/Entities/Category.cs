@@ -7,8 +7,8 @@
         public int? PId { get; set; }
         public Category? PCategory { get; set; }
 
-        public ICollection<Category> CCategories { get; set; } = new List<Category>();
+        public List<Category> CCategories { get; set; } = new List<Category>();
 
-        public ICollection<Book> Books { get; set; } = new List<Book>();
+        public List<Book> Books { get; set; } = new List<Book>();
     }
 }

@@ -32,6 +32,12 @@ namespace Infrastructure.Data.Configurations
                 .WithMany(c => c.Books)
                 .HasForeignKey(b => b.CategoryId)
                 .OnDelete(DeleteBehavior.SetNull);
+            
+            builder
+                .HasMany(b => b.Images)
+                .WithOne(i => i.Book)
+                .HasForeignKey(i => i.BookId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
