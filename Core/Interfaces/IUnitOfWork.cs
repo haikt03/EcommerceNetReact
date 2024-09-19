@@ -1,7 +1,7 @@
 ﻿
-using Core.Interfaces.IRepositories;
+using Core.Interfaces;
 
-namespace Core.Interfaces.IRepositories
+namespace Core.Interfaces
 {
     public interface IUnitOfWork: IDisposable
     {

@@ -1,4 +1,4 @@
-﻿using Core.Interfaces.IRepositories;
+﻿using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

@@ -1,6 +1,6 @@
-﻿namespace API.Helpers
+﻿namespace Core.Helpers
 {
-    public class MetaData
+    public class PaginationHeader
     {
         public int PageSize { get; set; }
         public int PageIndex { get; set; }

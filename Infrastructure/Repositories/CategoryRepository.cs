@@ -1,8 +1,9 @@
 ﻿using Core.Entities;
-using Core.Interfaces.IRepositories;
+using Core.Helpers;
+using Core.Interfaces;
+using Core.Params;
 using Infrastructure.Data;
 using Infrastructure.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -12,18 +13,20 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public async Task<List<Category>> GetAllAsync(string? search = null)
+        public async Task<PagedList<Category>> GetAllAsync(PaginationParam paginationParam, string? search = null)
         {
             var query = _context.Categories.AsQueryable().Search(search).OrderBy(c => c.Name);
+            var result = await query.ToPagedListAsync(paginationParam.PageSize, paginationParam.PageIndex);
 
-            return await query.ToListAsync();
+            return result;
         }
 
-        public async Task<List<Category>> GetAllHierarchyAsync()
+        public async Task<PagedList<Category>> GetAllHierarchyAsync(PaginationParam paginationParam)
         {
             var query = _context.Categories.AsQueryable().GetHierarchicalCategories();
+            var result = await query.ToPagedListAsync(paginationParam.PageSize, paginationParam.PageIndex);
 
-            return await query.ToListAsync();
+            return result;
         }
     }
 }

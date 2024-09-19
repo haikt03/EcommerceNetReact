@@ -1,5 +1,4 @@
-﻿using API.Helpers;
-using Core.Interfaces.IRepositories;
+﻿using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +13,6 @@ namespace API.Extensions
             {
                 opt.UseSqlServer(config.GetConnectionString("Default"));
             });
-
-            services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IBookRepository, BookRepository>();

@@ -1,5 +1,4 @@
-﻿using API.DTOs.Books;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
@@ -31,10 +30,10 @@ namespace API.Controllers
             throw new Exception("Lỗi máy chủ");
         }
 
-        [HttpPost("validation-error")]
-        public IActionResult GetValidationError(CreateBookDto book)
-        {
-            return Ok();
-        }
+        //[HttpPost("validation-error")]
+        //public IActionResult GetValidationError(CreateBookDto book)
+        //{
+        //    return Ok();
+        //}
     }
 }

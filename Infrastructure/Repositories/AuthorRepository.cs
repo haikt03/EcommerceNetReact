@@ -1,8 +1,9 @@
 ﻿using Core.Entities;
-using Core.Interfaces.IRepositories;
+using Core.Helpers;
+using Core.Interfaces;
+using Core.Params;
 using Infrastructure.Data;
 using Infrastructure.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -12,11 +13,12 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public async Task<List<Author>> GetAllAsync(string? search = null)
+        public async Task<PagedList<Author>> GetAllAsync(PaginationParam paginationParam,string? search = null)
         {
             var query = _context.Authors.AsQueryable().Search(search).OrderBy(a => a.FullName);
+            var result = await query.ToPagedListAsync(paginationParam.PageSize, paginationParam.PageIndex);
 
-            return await query.ToListAsync();
+            return result;
         }
     }
 }

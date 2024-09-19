@@ -1,6 +1,6 @@
-﻿namespace API.DTOs.Params
+﻿namespace Core.Params
 {
-    public class BookParam
+    public class BookParam : PaginationParam
     {
         public string? Search { get; set; }
         public string? Categories { get; set; }

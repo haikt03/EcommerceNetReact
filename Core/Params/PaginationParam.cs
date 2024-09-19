@@ -1,4 +1,4 @@
-﻿namespace API.DTOs.Params
+﻿namespace Core.Params
 {
     public class PaginationParam
     {
@@ -7,7 +7,7 @@
         public int PageSize
         {
             get => _pageSize;
-            set => _pageSize = (value > MAX_PAGE_SIZE) ? MAX_PAGE_SIZE : value;
+            set => _pageSize = value > MAX_PAGE_SIZE ? MAX_PAGE_SIZE : value;
         }
         public int PageIndex { get; set; } = 1;
     }

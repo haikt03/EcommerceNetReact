@@ -2,8 +2,8 @@
 {
     public class Image: BaseEntity
     {
-        public string Url { get; set; } = string.Empty;
-        public string PublicId { get; set; } = string.Empty;
+        public required string PublicId { get; set; }
+        public required string Url { get; set; }
 
         public int? BookId { get; set; }
         public Book? Book { get; set; }

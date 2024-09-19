@@ -13,7 +13,6 @@ namespace Infrastructure.Data.Configurations
             builder.Property(b => b.Title).IsRequired();
             builder.Property(b => b.Publisher).IsRequired();
             builder.Property(b => b.PublishedYear).IsRequired();
-            builder.Property(b => b.Supplier).IsRequired();
             builder.Property(b => b.Language).IsRequired();
             builder.Property(b => b.Translator).IsRequired();
             builder.Property(b => b.ISBN).IsRequired();

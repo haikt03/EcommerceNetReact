@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240916094626_InitialDb")]
+    [Migration("20240919100729_InitialDb")]
     partial class InitialDb
     {
         /// <inheritdoc />
@@ -100,10 +100,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("QuantityInStock")
                         .HasColumnType("int");
-
-                    b.Property<string>("Supplier")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
