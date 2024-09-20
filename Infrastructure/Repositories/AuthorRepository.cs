@@ -1,7 +1,6 @@
 ﻿using Core.Entities;
 using Core.Helpers;
 using Core.Interfaces;
-using Core.Params;
 using Infrastructure.Data;
 using Infrastructure.Extensions;
 

@@ -12,7 +12,7 @@
         public int Price { get; set; }
         public int QuantityInStock { get; set; }
 
-        public List<Image> Images { get; set; } = new List<Image>();
+        public List<Image>? Images { get; set; }
 
         public int? CategoryId { get; set; }
         public Category? Category { get; set; }

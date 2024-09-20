@@ -1,4 +1,4 @@
-﻿namespace Core.Params
+﻿namespace Core.Helpers
 {
     public class BookParam : PaginationParam
     {

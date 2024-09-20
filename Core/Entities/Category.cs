@@ -8,7 +8,6 @@
         public Category? PCategory { get; set; }
 
         public List<Category>? CCategories { get; set; }
-
-        public List<Book> Books { get; set; } = new List<Book>();
+        public List<Book>? Books { get; set; }
     }
 }
