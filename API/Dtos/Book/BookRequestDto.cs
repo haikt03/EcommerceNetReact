@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Dtos.Book
 {
-    public class CreateBookDto
+    public class BookRequestDto
     {
         private const string RequiredErrorMessage = "Giá trị này không được để trống";
         private const string RangeErrorMessage = "Giá trị này phải lớn hơn hoặc bằng {1}";
@@ -40,6 +40,5 @@ namespace API.Dtos.Book
 
         public int? CategoryId { get; set; }
         public int? AuthorId { get; set; }
-        public List<UploadImageDto>? Images { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace API.Dtos.Author
         public string? Biography { get; set; }
         public string? Country { get; set; }
 
-        public AuthorImageDto? Image { get; set; }
+        public ImageDto? Image { get; set; }
         public List<BookDto>? Books { get; set; } = new List<BookDto>();
     }
 }

@@ -8,7 +8,6 @@ namespace API.Dtos.Book
         public string Title { get; set; } = string.Empty;
         public string Publisher { get; set; } = string.Empty;
         public int PublishedYear { get; set; }
-        public string Supplier { get; set; } = string.Empty;
         public string Language { get; set; } = string.Empty;
         public string? Translator { get; set; }
         public string ISBN { get; set; } = string.Empty;
@@ -17,6 +16,6 @@ namespace API.Dtos.Book
         public int QuantityInStock { get; set; }
         public string? CategoryName { get; set; }
         public string? AuthorName { get; set; }
-        public List<BookImageDto>? Images { get; set; }
+        public List<ImageDto>? Images { get; set; }
     }
 }

@@ -2,9 +2,10 @@
 
 namespace API.Dtos.Category
 {
-    public class UpdateCategoryDto : CreateCategoryDto
+    public class CategoryRequestDto
     {
         [Required(ErrorMessage = "Giá trị này không được để trống")]
-        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public int? PId { get; set; }
     }
 }

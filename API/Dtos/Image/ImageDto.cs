@@ -5,5 +5,7 @@
         public int Id { get; set; }
         public string PublicId { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
+        public int? BookId { get; set; }
+        public int? AuthorId { get; set; }
     }
 }
