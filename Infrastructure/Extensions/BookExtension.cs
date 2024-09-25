@@ -43,8 +43,8 @@ namespace Infrastructure.Extensions
             }
 
             var result = query
-                .Where(b => (categoryList.Count == 0 || categoryList.Contains(b.Category.Name)))
-                .Where(b => (authorList.Count == 0 || authorList.Contains(b.Author.FullName)))
+                .Where(b => (categoryList.Count == 0 || categoryList.Contains(b.Category == null ? "" : b.Category.Name)))
+                .Where(b => (authorList.Count == 0 || authorList.Contains(b.Author == null ? "" : b.Author.FullName)))
                 .Where(b => (languageList.Count == 0 || languageList.Contains(b.Language)))
                 .Where(b => (minPrice == 0 || b.Price >= minPrice))
                 .Where(b => (maxPrice == 0 || b.Price <= maxPrice));

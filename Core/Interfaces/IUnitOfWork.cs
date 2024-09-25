@@ -8,6 +8,6 @@ namespace Core.Interfaces
         IBookRepository bookRepo { get; }
         IAuthorRepository authorRepo { get; }
         ICategoryRepository categoryRepo { get; }
-        Task<bool> Complete();
+        Task<bool> CompleteAsync();
     }
 }

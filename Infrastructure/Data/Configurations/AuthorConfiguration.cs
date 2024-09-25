@@ -12,6 +12,7 @@ namespace Infrastructure.Data.Configurations
             builder.Property(a => a.FullName).IsRequired();
             builder.Property(a => a.Biography).IsRequired();
             builder.Property(a => a.Country).IsRequired();
+            builder.OwnsOne(a => a.Image);
         }
     }
 }

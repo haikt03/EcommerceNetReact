@@ -143,43 +143,30 @@ namespace Infrastructure.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Core.Entities.Image", b =>
+            modelBuilder.Entity("Core.Entities.Author", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.OwnsOne("Core.Entities.Image", "Image", b1 =>
+                        {
+                            b1.Property<int>("AuthorId")
+                                .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                            b1.Property<string>("PublicId")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("AuthorId")
-                        .HasColumnType("int");
+                            b1.Property<string>("Url")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("BookId")
-                        .HasColumnType("int");
+                            b1.HasKey("AuthorId");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                            b1.ToTable("Authors");
 
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("datetime2");
+                            b1.WithOwner()
+                                .HasForeignKey("AuthorId");
+                        });
 
-                    b.Property<string>("PublicId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId")
-                        .IsUnique()
-                        .HasFilter("[AuthorId] IS NOT NULL");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("Images");
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("Core.Entities.Book", b =>
@@ -194,9 +181,27 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.OwnsOne("System.Collections.Generic.List<Core.Entities.Image>", "Images", b1 =>
+                        {
+                            b1.Property<int>("BookId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Capacity")
+                                .HasColumnType("int");
+
+                            b1.HasKey("BookId");
+
+                            b1.ToTable("Books");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BookId");
+                        });
+
                     b.Navigation("Author");
 
                     b.Navigation("Category");
+
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("Core.Entities.Category", b =>
@@ -209,32 +214,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("PCategory");
                 });
 
-            modelBuilder.Entity("Core.Entities.Image", b =>
-                {
-                    b.HasOne("Core.Entities.Author", "Author")
-                        .WithOne("Image")
-                        .HasForeignKey("Core.Entities.Image", "AuthorId");
-
-                    b.HasOne("Core.Entities.Book", "Book")
-                        .WithMany("Images")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Author");
-
-                    b.Navigation("Book");
-                });
-
             modelBuilder.Entity("Core.Entities.Author", b =>
                 {
                     b.Navigation("Books");
-
-                    b.Navigation("Image");
-                });
-
-            modelBuilder.Entity("Core.Entities.Book", b =>
-                {
-                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("Core.Entities.Category", b =>

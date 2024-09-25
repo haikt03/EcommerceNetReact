@@ -3,6 +3,7 @@ using Core.Helpers;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -20,11 +21,9 @@ namespace Infrastructure.Repositories
             return result;
         }
 
-        public async Task<PagedList<Category>> GetAllHierarchyAsync(PaginationParam paginationParam)
+        public async Task<List<Category>> GetAllHierarchyAsync(int? parentId, int? currentDepth, int? maxDepth)
         {
-            var query = _context.Categories.AsQueryable().GetHierarchicalCategories();
-            var result = await query.ToPagedListAsync(paginationParam.PageSize, paginationParam.PageIndex);
-
+            var result = await _context.Categories.AsQueryable().GetHierarchicalCategories(parentId, currentDepth, maxDepth).ToListAsync();
             return result;
         }
     }

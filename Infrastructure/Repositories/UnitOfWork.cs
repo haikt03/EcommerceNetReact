@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
 
         public ICategoryRepository categoryRepo { get; private set; }
 
-        public async Task<bool> Complete()
+        public async Task<bool> CompleteAsync()
         {
             return await _context.SaveChangesAsync() > 0;
         }

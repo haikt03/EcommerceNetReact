@@ -19,6 +19,7 @@ namespace Infrastructure.Data.Configurations
             builder.Property(b => b.Description).IsRequired();
             builder.Property(b => b.Price).IsRequired();
             builder.Property(b => b.QuantityInStock).IsRequired();
+            builder.OwnsOne(b => b.Images);
 
             builder
                     .HasOne(b => b.Author)
@@ -31,12 +32,6 @@ namespace Infrastructure.Data.Configurations
                 .WithMany(c => c.Books)
                 .HasForeignKey(b => b.CategoryId)
                 .OnDelete(DeleteBehavior.SetNull);
-            
-            builder
-                .HasMany(b => b.Images)
-                .WithOne(i => i.Book)
-                .HasForeignKey(i => i.BookId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
