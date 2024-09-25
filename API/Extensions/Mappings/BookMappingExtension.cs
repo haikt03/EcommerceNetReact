@@ -1,4 +1,5 @@
 ﻿using API.Dtos.Book;
+using API.Dtos.Image;
 using Core.Entities;
 
 namespace API.Extensions.Mappings
@@ -21,11 +22,15 @@ namespace API.Extensions.Mappings
                 QuantityInStock = book.QuantityInStock,
                 CategoryName = book.Category?.Name,
                 AuthorName = book.Author?.FullName,
-                Images = book.Images?.Select(i => i.ToDto()).ToList()
+                Images = book.Images?.Select(i => new ImageDto
+                {
+                    PublicId = i?.PublicId,
+                    Url = i?.Url
+                }).ToList()
             };
         }
 
-        public static Book ToEntity(this BookRequestDto bookDto)
+        public static Book ToEntity(this BookUpsertDto bookDto)
         {
             return new Book
             {

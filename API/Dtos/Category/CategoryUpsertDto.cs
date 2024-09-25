@@ -2,7 +2,7 @@
 
 namespace API.Dtos.Category
 {
-    public class CategoryRequestDto
+    public class CategoryUpsertDto
     {
         [Required(ErrorMessage = "Giá trị này không được để trống")]
         public string Name { get; set; } = string.Empty;

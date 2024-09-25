@@ -1,4 +1,5 @@
 ﻿using API.Dtos.Author;
+using API.Dtos.Image;
 using Core.Entities;
 
 namespace API.Extensions.Mappings
@@ -13,12 +14,16 @@ namespace API.Extensions.Mappings
                 FullName = author.FullName,
                 Biography = author.Biography,
                 Country = author.Country,
-                Image = author.Image?.ToDto(),
-                Books = author.Books?.Select(b => b.ToDto()).ToList()
+                Books = author.Books?.Select(b => b.ToDto()).ToList(),
+                Image = new ImageDto
+                {
+                    PublicId = author?.Image?.PublicId,
+                    Url = author?.Image?.Url
+                }
             };
         }
 
-        public static Author ToEntity(this AuthorRequestDto authorDto)
+        public static Author ToEntity(this AuthorUpsertDto authorDto)
         {
             return new Author
             {

@@ -6,6 +6,7 @@ namespace API.Controllers
     {
         public CategoriesController(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
+
         }
     }
 }

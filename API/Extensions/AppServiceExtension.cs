@@ -1,6 +1,7 @@
 ﻿using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
@@ -19,6 +20,8 @@ namespace API.Extensions
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<ICloudImageService, CloudImageService>();
 
             return services;
         }

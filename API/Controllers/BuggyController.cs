@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.Dtos.Book;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
@@ -15,7 +16,7 @@ namespace API.Controllers
         [HttpGet("bad-request")]
         public IActionResult GetBadRequest()
         {
-            return BadRequest("Yêu cầu không hợp lệ");
+            return BadRequest();
         }
 
         [HttpGet("not-found")]
@@ -30,10 +31,10 @@ namespace API.Controllers
             throw new Exception("Lỗi máy chủ");
         }
 
-        //[HttpPost("validation-error")]
-        //public IActionResult GetValidationError(CreateBookDto book)
-        //{
-        //    return Ok();
-        //}
+        [HttpPost("validation-error")]
+        public IActionResult GetValidationError(BookUpsertDto book)
+        {
+            return Ok();
+        }
     }
 }

@@ -1,9 +1,8 @@
-﻿using API.Dtos.Image;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace API.Dtos.Book
 {
-    public class BookRequestDto
+    public class BookUpsertDto
     {
         private const string RequiredErrorMessage = "Giá trị này không được để trống";
         private const string RangeErrorMessage = "Giá trị này phải lớn hơn hoặc bằng {1}";

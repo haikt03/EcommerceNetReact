@@ -17,7 +17,7 @@ namespace API.Extensions.Mappings
             };
         }
 
-        public static Category ToEntity(this CategoryRequestDto categoryDto)
+        public static Category ToEntity(this CategoryUpsertDto categoryDto)
         {
             return new Category
             {
