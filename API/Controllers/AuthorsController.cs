@@ -1,10 +1,11 @@
 ﻿using API.Dtos.Author;
+using API.Dtos.Image;
+using API.Extensions;
 using API.Extensions.Mappings;
 using Core.Entities;
 using Core.Helpers;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -16,21 +17,15 @@ namespace API.Controllers
             _cloudImageService = cloudImageService;
         }
 
-        // GET: api/Authors
-        [HttpGet("all")]
-        public async Task<ActionResult<List<AuthorDto>>> GetAllAsync()
+        // GET: api/Authors?
+        [HttpGet]
+        public async Task<ActionResult<PagedList<AuthorDto>>> GetAllAsync(PaginationParam paginationParam, string? search = null)
         {
-            var authors = await _unitOfWork.authorRepo.GetAllAsync();
+            var authors = await _unitOfWork.authorRepo.GetAllAsync(paginationParam, search);
+            Response.AddPaginationHeader(authors.PaginationHeader);
             var authorDtos = authors.Select(a => a.ToDto()).ToList();
 
             return Ok(authorDtos);
-        }
-
-        // GET: api/Authors?
-        [HttpGet]
-        public async Task<ActionResult<PagedList<Author>>> GetAllAsync(PaginationParam paginationParam, string? search = null)
-        {
-            return await _unitOfWork.authorRepo.GetAllAsync(paginationParam, search);
         }
 
         // GET: api/Authors/1
@@ -48,15 +43,7 @@ namespace API.Controllers
         public async Task<ActionResult<AuthorDto>> CreateAsync(AuthorUpsertDto authorDto)
         {
             var author = authorDto.ToEntity();
-
-            var uploadResult = new UploadImageResult();
-            if (authorDto.Image != null)
-                uploadResult = await _cloudImageService.UploadImageAsync(authorDto.Image.FileData, authorDto.Image.FileName);
-            author.Image = new Image
-            {
-                PublicId = uploadResult.PublicId,
-                Url = uploadResult.Url
-            };
+            author = await Upload(author, authorDto.Image);
 
             _unitOfWork.authorRepo.Add(author);
             await _unitOfWork.CompleteAsync();
@@ -70,7 +57,9 @@ namespace API.Controllers
         {
             if (!AuthorExists(id))
                 return NotFound();
+
             var author = authorDto.ToEntity();
+            author = await Upload(author, authorDto.Image);
 
             _unitOfWork.authorRepo.Update(author);
             await _unitOfWork.CompleteAsync();
@@ -95,6 +84,21 @@ namespace API.Controllers
         private bool AuthorExists(int id)
         {
             return _unitOfWork.authorRepo.Exists(id);
+        }
+
+        private async Task<Author> Upload(Author author, UploadImageDto? imageDto)
+        {
+            if (imageDto == null)
+                return author;
+
+            var uploadResult = await _cloudImageService.UploadImageAsync(imageDto.FileData, imageDto.FileName);
+            author.Image = new Image
+            {
+                PublicId = uploadResult.PublicId,
+                Url = uploadResult.Url
+            };
+
+            return author;
         }
     }
 }
