@@ -40,11 +40,11 @@ namespace Infrastructure.Data
 
             foreach (var entry in entries)
             {
+                var entity = (BaseEntity)entry.Entity;
                 if (entry.State == EntityState.Added)
-                {
-                    ((Book)entry.Entity).CreatedAt = DateTime.UtcNow;
-                }
-                ((Book)entry.Entity).ModifiedAt = DateTime.UtcNow;
+                    entity.CreatedAt = DateTime.Now;
+                if (entry.State == EntityState.Modified)
+                    entity.ModifiedAt = DateTime.Now;
             }
         }
     }

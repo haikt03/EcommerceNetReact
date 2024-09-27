@@ -17,13 +17,18 @@ namespace API.Extensions.Mappings
             };
         }
 
-        public static Category ToEntity(this CategoryUpsertDto categoryDto)
+        public static Category ToEntity(this CategoryUpsertDto categoryDto, Category? category = null)
         {
-            return new Category
-            {
-                Name = categoryDto.Name,
-                PId = categoryDto.PId,
-            };
+            if (category == null)
+                return new Category
+                {
+                    Name = categoryDto.Name,
+                    PId = categoryDto.PId
+                };
+
+            category.Name = categoryDto.Name;
+            category.PId = categoryDto.PId;
+            return category;
         }
     }
 }

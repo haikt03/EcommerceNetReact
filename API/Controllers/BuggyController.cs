@@ -16,13 +16,13 @@ namespace API.Controllers
         [HttpGet("bad-request")]
         public IActionResult GetBadRequest()
         {
-            return BadRequest();
+            return BadRequest(new ProblemDetails { Title = "Thác thao không thành công"});
         }
 
         [HttpGet("not-found")]
         public IActionResult GetNotFound()
         {
-            return NotFound();
+            return NotFound(new ProblemDetails { Title = "Không tìm thấy" });
         }
 
         [HttpGet("server-error")]

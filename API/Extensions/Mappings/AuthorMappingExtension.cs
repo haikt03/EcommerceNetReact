@@ -23,14 +23,20 @@ namespace API.Extensions.Mappings
             };
         }
 
-        public static Author ToEntity(this AuthorUpsertDto authorDto)
+        public static Author ToEntity(this AuthorUpsertDto authorDto, Author? author = null)
         {
-            return new Author
-            {
-                FullName = authorDto.FullName,
-                Biography = authorDto.Biography,
-                Country = authorDto.Country
-            };
+            if (author == null)
+                return new Author
+                {
+                    FullName = authorDto.FullName,
+                    Biography = authorDto.Biography,
+                    Country = authorDto.Country
+                };
+
+            author.FullName = authorDto.FullName;
+            author.Biography = authorDto.Biography;
+            author.Country = authorDto.Country;
+            return author;
         }
     }
 }
