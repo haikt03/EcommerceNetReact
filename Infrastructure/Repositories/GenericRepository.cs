@@ -38,10 +38,5 @@ namespace Infrastructure.Repositories
         {
             _context.Set<T>().Remove(entity);
         }
-
-        public bool Exists(int id)
-        {
-            return _context.Set<T>().Any(x => x.Id == id);
-        }
     }
 }

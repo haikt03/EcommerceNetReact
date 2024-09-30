@@ -1,5 +1,5 @@
 ﻿using API.Dtos.Author;
-using API.Dtos.Image;
+using API.Dtos.Book;
 using API.Extensions;
 using API.Extensions.Mappings;
 using Core.Entities;
@@ -19,7 +19,7 @@ namespace API.Controllers
 
         // GET: api/Authors?
         [HttpGet]
-        public async Task<ActionResult<PagedList<AuthorDto>>> GetAllAuthors([FromQuery]PaginationParam paginationParam, string? search = null)
+        public async Task<ActionResult<PagedList<AuthorDto>>> GetAllAuthors([FromQuery] PaginationParam paginationParam, string? search = null)
         {
             var authors = await _unitOfWork.authorRepo.GetAllAsync(paginationParam, search);
             Response.AddPaginationHeader(authors.PaginationHeader);
@@ -45,9 +45,9 @@ namespace API.Controllers
         {
             var author = authorDto.ToEntity();
 
-            if (authorDto.Image != null)
+            if (authorDto.File != null && authorDto.File.Length > 0)
             {
-                author = await Upload(author, authorDto.Image);
+                author = await UploadImage(author, authorDto.File);
                 if (author.Image == null)
                     return BadRequest(new ProblemDetails { Title = "Tải ảnh lên không thành công" });
             }
@@ -62,18 +62,18 @@ namespace API.Controllers
 
         // PUT: api/Authors/1
         [HttpPut("{id}")]
-        public async Task<ActionResult<AuthorDto>> UpdateAuthor(int id, AuthorUpsertDto authorDto)
+        public async Task<ActionResult<AuthorDto>> UpdateAuthor(AuthorUpsertDto authorDto, int id)
         {
             var author = await _unitOfWork.authorRepo.GetByIdAsync(id);
             if (author == null)
                 return NotFound(new ProblemDetails { Title = "Không tìm thấy tác giả" });
 
-            if (authorDto.Image != null)
+            if (authorDto.File != null && authorDto.File.Length > 0)
             {
-                author = await Upload(author, authorDto.Image);
+                author = await UploadImage(author, authorDto.File);
                 if (author.Image == null)
                     return BadRequest(new ProblemDetails { Title = "Tải ảnh lên không thành công" });
-            }    
+            }
             author = authorDto.ToEntity(author);
 
             _unitOfWork.authorRepo.Update(author);
@@ -95,8 +95,8 @@ namespace API.Controllers
 
             if (author.Image != null)
             {
-                var uploadResult = await _cloudImageService.DeleteImageAsync(author.Image.PublicId);
-                if (!uploadResult)
+                var deleteImageResult = await _cloudImageService.DeleteImageAsync(author.Image.PublicId);
+                if (!deleteImageResult)
                     return BadRequest(new ProblemDetails { Title = "Xoá ảnh không thành công" });
             }
 
@@ -108,20 +108,28 @@ namespace API.Controllers
             return NoContent();
         }
 
-        private bool AuthorExists(int id)
+        // GET: api/Authors/1/books
+        [HttpGet("{id}/books")]
+        public async Task<ActionResult<PagedList<BookDto>>> GetAllBooksByAuthor([FromQuery] PaginationParam paginationParam, int id)
         {
-            return _unitOfWork.authorRepo.Exists(id);
+            var books = await _unitOfWork.bookRepo.GetAllByAuthor(paginationParam, id);
+            Response.AddPaginationHeader(books.PaginationHeader);
+            var bookDtos = books.Select(b => b.ToDto()).ToList();
+
+            return Ok(bookDtos);
         }
 
-        private async Task<Author> Upload(Author author, UploadImageDto imageDto)
+        private async Task<Author> UploadImage(Author author, IFormFile file)
         {
-            var uploadResult = await _cloudImageService.UploadImageAsync(imageDto.FileData, imageDto.FileName);
-            author.Image = new Image
+            using (var stream = file.OpenReadStream())
             {
-                PublicId = uploadResult.PublicId,
-                Url = uploadResult.Url
-            };
-
+                var uploadResult = await _cloudImageService.UploadImageAsync(new UploadImageParam { FileStream = stream, FileName = file.FileName });
+                author.Image = new Image
+                {
+                    PublicId = uploadResult.PublicId,
+                    Url = uploadResult.Url
+                };
+            }
             return author;
         }
     }

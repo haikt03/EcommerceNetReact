@@ -39,5 +39,7 @@ namespace API.Dtos.Book
 
         public int? CategoryId { get; set; }
         public int? AuthorId { get; set; }
+
+        public List<IFormFile>? Files { get; set; }
     }
 }

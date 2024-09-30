@@ -9,6 +9,6 @@ namespace API.Dtos.Author
         public string FullName { get; set; } = string.Empty;
         public string? Biography { get; set; }
         public string? Country { get; set; }
-        public UploadImageDto? Image { get; set; }
+        public IFormFile? File { get; set; }
     }
 }

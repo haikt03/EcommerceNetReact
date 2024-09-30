@@ -30,22 +30,38 @@ namespace API.Extensions.Mappings
             };
         }
 
-        public static Book ToEntity(this BookUpsertDto bookDto)
+        public static Book ToEntity(this BookUpsertDto bookDto, Book? book = null)
         {
-            return new Book
+            if (book == null)
             {
-                Title = bookDto.Title,
-                Publisher = bookDto.Publisher,
-                PublishedYear = bookDto.PublishedYear,
-                Language = bookDto.Language,
-                Translator = bookDto.Translator,
-                ISBN = bookDto.ISBN,
-                Description = bookDto.Description,
-                Price = bookDto.Price,
-                QuantityInStock = bookDto.QuantityInStock,
-                CategoryId = bookDto.CategoryId,
-                AuthorId = bookDto.AuthorId
-            };
+                return new Book
+                {
+                    Title = bookDto.Title,
+                    Publisher = bookDto.Publisher,
+                    PublishedYear = bookDto.PublishedYear,
+                    Language = bookDto.Language,
+                    Translator = bookDto.Translator,
+                    ISBN = bookDto.ISBN,
+                    Description = bookDto.Description,
+                    Price = bookDto.Price,
+                    QuantityInStock = bookDto.QuantityInStock,
+                    CategoryId = bookDto.CategoryId,
+                    AuthorId = bookDto.AuthorId
+                };
+            }
+
+            book.Title = bookDto.Title;
+            book.Publisher = bookDto.Publisher;
+            book.PublishedYear = bookDto.PublishedYear;
+            book.Language = bookDto.Language;
+            book.Translator = bookDto.Translator;
+            book.ISBN = bookDto.ISBN;
+            book.Description = bookDto.Description;
+            book.Price = bookDto.Price;
+            book.QuantityInStock = bookDto.QuantityInStock;
+            book.CategoryId = bookDto.CategoryId;
+            book.AuthorId = bookDto.AuthorId;
+            return book;
         }
     }
 }

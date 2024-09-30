@@ -9,6 +9,5 @@ namespace Core.Interfaces
         void Add(T entity);
         void Update(T entity);
         void Remove(T entity);
-        bool Exists(int id);
     }
 }

@@ -20,34 +20,19 @@ namespace Infrastructure.Services
             _cloudinary = new Cloudinary(account);
         }
 
-        public async Task<UploadImageResult> UploadImageAsync(byte[] fileData, string fileName)
+        public async Task<UploadImageResult> UploadImageAsync(UploadImageParam uploadParam)
         {
-            using (var stream = new MemoryStream(fileData))
+            var uploadParams = new RawUploadParams
             {
-                var uploadParams = new ImageUploadParams
-                {
-                    File = new FileDescription(fileName, stream),
-                    PublicId = fileName
-                };
-                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                File = new FileDescription(uploadParam.FileName, uploadParam.FileStream)
+            };
+            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
-                return new UploadImageResult
-                {
-                    PublicId = uploadResult.PublicId,
-                    Url = uploadResult.SecureUrl.ToString()
-                }; ;
-            }
-        }
-
-        public async Task<List<UploadImageResult>> UploadImagesAsync(List<(byte[] FileData, string FileName)> files)
-        {
-            var uploadResults = new List<UploadImageResult>();
-            foreach (var file in files)
+            return new UploadImageResult
             {
-                var uploadResult = await UploadImageAsync(file.FileData, file.FileName);
-                uploadResults.Add(uploadResult);
-            }
-            return uploadResults;
+                PublicId = uploadResult.PublicId,
+                Url = uploadResult.SecureUrl.ToString()
+            };
         }
 
         public async Task<bool> DeleteImageAsync(string publicId)
@@ -56,17 +41,6 @@ namespace Infrastructure.Services
             var result = await _cloudinary.DestroyAsync(deletionParams);
 
             return result.Result == "ok";
-        }
-
-        public async Task<bool> DeleteImagesAsync(List<string> publicIds)
-        {
-            var allDeleted = true;
-            foreach (var publicId in publicIds)
-            {
-                var deleted = await DeleteImageAsync(publicId);
-                if (!deleted) allDeleted = false;
-            }
-            return allDeleted;
         }
     }
 }

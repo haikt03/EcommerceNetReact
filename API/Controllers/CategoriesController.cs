@@ -1,4 +1,5 @@
-﻿using API.Dtos.Category;
+﻿using API.Dtos.Book;
+using API.Dtos.Category;
 using API.Extensions;
 using API.Extensions.Mappings;
 using Core.Entities;
@@ -63,7 +64,7 @@ namespace API.Controllers
 
         // PUT: api/Categories/1
         [HttpPut("{id}")]
-        public async Task<ActionResult<CategoryDto>> UpdateCategory(int id, CategoryUpsertDto categoryDto)
+        public async Task<ActionResult<CategoryDto>> UpdateCategory(CategoryUpsertDto categoryDto, int id)
         {
             var category = await _unitOfWork.categoryRepo.GetByIdAsync(id);
             if (category == null)
@@ -120,9 +121,15 @@ namespace API.Controllers
             return NoContent();
         }
 
-        private bool CategoryExists(int id)
+        // GET: api/Categories/1/books
+        [HttpGet("{id}/categories")]
+        public async Task<ActionResult<PagedList<BookDto>>> GetAllBooksByCategory([FromQuery] PaginationParam paginationParam, int id)
         {
-            return _unitOfWork.categoryRepo.Exists(id);
+            var books = await _unitOfWork.bookRepo.GetAllByCategory(paginationParam, id);
+            Response.AddPaginationHeader(books.PaginationHeader);
+            var bookDtos = books.Select(b => b.ToDto()).ToList();
+
+            return Ok(bookDtos);
         }
     }
 }
