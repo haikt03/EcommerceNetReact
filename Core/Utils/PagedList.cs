@@ -1,4 +1,6 @@
-﻿namespace Core.Helpers
+﻿using Core.Helpers;
+
+namespace Core.Utils
 {
     public class PagedList<T> : List<T>
     {
