@@ -1,5 +1,9 @@
 using API.Extensions;
 using API.Middlewares;
+using Infrastructure.Data;
+using Infrastructure.Data.SeedData;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,5 +32,19 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+try
+{
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<AppDbContext>();
+    await context.Database.MigrateAsync();
+    await AppSeeder.SeedAsync(context);
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.ToString());
+    throw;
+}
 
 app.Run();
