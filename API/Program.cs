@@ -1,5 +1,6 @@
 using API.Extensions;
 using API.Middlewares;
+using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.SeedData;
 using Microsoft.AspNetCore.Identity;
@@ -38,8 +39,9 @@ try
     using var scope = app.Services.CreateScope();
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<AppDbContext>();
+    var cloudImageService = services.GetRequiredService<ICloudImageService>();
     await context.Database.MigrateAsync();
-    await AppSeeder.SeedAsync(context);
+    await AppSeeder.SeedAsync(context, cloudImageService);
 }
 catch (Exception ex)
 {

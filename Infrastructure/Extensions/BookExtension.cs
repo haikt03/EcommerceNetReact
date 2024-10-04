@@ -11,7 +11,7 @@ namespace Infrastructure.Extensions
                 return query;
             }
             var lowerCaseSearch = search.Trim().ToLower();
-            var result = query.Where(b => b.Title.ToLower().Contains(lowerCaseSearch));
+            var result = query.Where(b => b.Name.ToLower().Contains(lowerCaseSearch));
 
             return result;
         }
@@ -56,14 +56,14 @@ namespace Infrastructure.Extensions
         {
             if (string.IsNullOrWhiteSpace(sort))
             {
-                return query.OrderBy(b => b.Title);
+                return query.OrderBy(b => b.Name);
             }
 
             var result = sort switch
             {
                 "price" => query.OrderBy(b => b.Price),
                 "priceDesc" => query.OrderByDescending(b => b.Price),
-                _ => query.OrderBy(b => b.Title)
+                _ => query.OrderBy(b => b.Name)
             };
 
             return result;

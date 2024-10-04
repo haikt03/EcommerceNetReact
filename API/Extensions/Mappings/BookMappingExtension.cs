@@ -11,12 +11,14 @@ namespace API.Extensions.Mappings
             return new BookDto
             {
                 Id = book.Id,
-                Title = book.Title,
+                Name = book.Name,
+                Translator = book.Translator,
                 Publisher = book.Publisher,
                 PublishedYear = book.PublishedYear,
                 Language = book.Language,
-                Translator = book.Translator,
-                ISBN = book.ISBN,
+                Weight = book.Weight,
+                NumberOfPages = book.NumberOfPages,
+                Form = book.Form,
                 Description = book.Description,
                 Price = book.Price,
                 QuantityInStock = book.QuantityInStock,
@@ -36,12 +38,14 @@ namespace API.Extensions.Mappings
             {
                 return new Book
                 {
-                    Title = bookDto.Title,
+                    Name = bookDto.Name,
+                    Translator = bookDto.Translator,
                     Publisher = bookDto.Publisher,
                     PublishedYear = bookDto.PublishedYear,
                     Language = bookDto.Language,
-                    Translator = bookDto.Translator,
-                    ISBN = bookDto.ISBN,
+                    Weight = bookDto.Weight,
+                    NumberOfPages = bookDto.NumberOfPages,
+                    Form = bookDto.Form,
                     Description = bookDto.Description,
                     Price = bookDto.Price,
                     QuantityInStock = bookDto.QuantityInStock,
@@ -50,12 +54,14 @@ namespace API.Extensions.Mappings
                 };
             }
 
-            book.Title = bookDto.Title;
+            book.Name = bookDto.Name;
+            book.Translator = bookDto.Translator;
             book.Publisher = bookDto.Publisher;
             book.PublishedYear = bookDto.PublishedYear;
             book.Language = bookDto.Language;
-            book.Translator = bookDto.Translator;
-            book.ISBN = bookDto.ISBN;
+            book.Weight = bookDto.Weight;
+            book.NumberOfPages = bookDto.NumberOfPages;
+            book.Form = bookDto.Form;
             book.Description = bookDto.Description;
             book.Price = bookDto.Price;
             book.QuantityInStock = bookDto.QuantityInStock;

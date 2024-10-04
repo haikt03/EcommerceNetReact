@@ -24,7 +24,8 @@ namespace Infrastructure.Services
         {
             var uploadParams = new RawUploadParams
             {
-                File = new FileDescription(uploadParam.FileName, uploadParam.FileStream)
+                File = new FileDescription(uploadParam.FileName, uploadParam.FileStream),
+                Folder = "EcommerceNetReact"
             };
             var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
