@@ -21,7 +21,7 @@ namespace Infrastructure.Data.Configurations
             builder.Property(b => b.Description).IsRequired();
             builder.Property(b => b.Price).IsRequired();
             builder.Property(b => b.QuantityInStock).IsRequired();
-            builder.OwnsOne(b => b.Images);
+            builder.OwnsOne(b => b.Image);
 
             builder
                     .HasOne(b => b.Author)

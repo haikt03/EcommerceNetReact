@@ -18,6 +18,6 @@ namespace API.Dtos.Book
         public int QuantityInStock { get; set; }
         public string? CategoryName { get; set; }
         public string? AuthorName { get; set; }
-        public List<ImageDto>? Images { get; set; }
+        public ImageDto? Image { get; set; }
     }
 }

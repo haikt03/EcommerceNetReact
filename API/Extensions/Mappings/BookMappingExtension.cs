@@ -24,11 +24,11 @@ namespace API.Extensions.Mappings
                 QuantityInStock = book.QuantityInStock,
                 CategoryName = book.Category?.Name,
                 AuthorName = book.Author?.FullName,
-                Images = book.Images?.Select(i => new ImageDto
+                Image = new ImageDto
                 {
-                    PublicId = i?.PublicId,
-                    Url = i?.Url
-                }).ToList()
+                    PublicId = book?.Image?.PublicId,
+                    Url = book?.Image?.Url
+                }
             };
         }
 

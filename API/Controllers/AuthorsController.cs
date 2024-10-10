@@ -74,6 +74,13 @@ namespace API.Controllers
                 author = await UploadImage(author, authorDto.File);
                 if (author.Image == null)
                     return BadRequest(new ProblemDetails { Title = "Tải ảnh lên không thành công" });
+
+                if (author?.Image?.PublicId != null)
+                {
+                    var deleteResult = await _cloudImageService.DeleteImageAsync(author.Image.PublicId);
+                    if (deleteResult)
+                        return BadRequest(new ProblemDetails { Title = "Xoá ảnh cũ lên không thành công" });
+                }
             }
             author = authorDto.ToEntity(author);
 

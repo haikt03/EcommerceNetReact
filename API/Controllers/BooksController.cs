@@ -1,4 +1,5 @@
-﻿using API.Dtos.Book;
+﻿using API.Dtos.Author;
+using API.Dtos.Book;
 using API.Extensions;
 using API.Extensions.Mappings;
 using Core.Entities;
@@ -45,10 +46,10 @@ namespace API.Controllers
         {
             var book = bookDto.ToEntity();
 
-            if (bookDto.Files != null && bookDto.Files.Count > 0 && bookDto.Files.Any(f => f != null && f.Length > 0))
+            if (bookDto.File != null && bookDto.File.Length > 0)
             {
-                book = await UploadImages(book, bookDto.Files);
-                if (book.Images == null || book.Images.Count == 0)
+                book = await UploadImage(book, bookDto.File);
+                if (book.Image == null)
                     return BadRequest(new ProblemDetails { Title = "Tải ảnh lên không thành công" });
             }
 
@@ -68,11 +69,18 @@ namespace API.Controllers
             if (book == null)
                 return NotFound(new ProblemDetails { Title = "Không tìm thấy sách" });
 
-            if (bookDto.Files != null && bookDto.Files.Count > 0 && bookDto.Files.Any(f => f != null && f.Length > 0))
+            if (bookDto.File != null && bookDto.File.Length > 0)
             {
-                book = await UploadImages(book, bookDto.Files);
-                if (book.Images == null || book.Images.Count == 0)
+                book = await UploadImage(book, bookDto.File);
+                if (book.Image == null)
                     return BadRequest(new ProblemDetails { Title = "Tải ảnh lên không thành công" });
+
+                if (book?.Image?.PublicId != null)
+                {
+                    var deleteResult = await _cloudImageService.DeleteImageAsync(book.Image.PublicId);
+                    if (deleteResult)
+                        return BadRequest(new ProblemDetails { Title = "Xoá ảnh cũ lên không thành công" });
+                }
             }
             book = bookDto.ToEntity(book);
 
@@ -110,15 +118,16 @@ namespace API.Controllers
             return NoContent();
         }
 
-        private async Task<Book> UploadImages(Book book, List<IFormFile> files)
+        private async Task<Book> UploadImage(Book book, IFormFile file)
         {
-            foreach (var file in files)
+            using (var stream = file.OpenReadStream())
             {
-                using (var stream = file.OpenReadStream())
+                var uploadResult = await _cloudImageService.UploadImageAsync(new UploadImageParam { FileStream = stream, FileName = file.FileName });
+                book.Image = new Image
                 {
-                    var uploadResult = await _cloudImageService.UploadImageAsync(new UploadImageParam { FileStream = stream, FileName = file.FileName });
-                    book.Images = new List<Image> { new Image { Url = uploadResult.Url, PublicId = uploadResult.PublicId } };
-                }
+                    PublicId = uploadResult.PublicId,
+                    Url = uploadResult.Url
+                };
             }
             return book;
         }
