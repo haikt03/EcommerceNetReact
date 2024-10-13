@@ -100,14 +100,11 @@ namespace API.Controllers
             if (book == null)
                 return NotFound(new ProblemDetails { Title = "Không tìm thấy sách" });
 
-            if (book.Images != null && book.Images.Count > 0)
+            if (book.Image != null)
             {
-                foreach (var image in book.Images)
-                {
-                    var deleteImageResult = await _cloudImageService.DeleteImageAsync(image.PublicId);
-                    if (!deleteImageResult)
-                        return BadRequest(new ProblemDetails { Title = "Xoá ảnh không thành công" });
-                }
+                var deleteImageResult = await _cloudImageService.DeleteImageAsync(book.Image.PublicId);
+                if (!deleteImageResult)
+                    return BadRequest(new ProblemDetails { Title = "Xoá ảnh không thành công" });
             }
 
             _unitOfWork.bookRepo.Remove(book);

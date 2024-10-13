@@ -46,14 +46,15 @@ namespace Infrastructure.Data.SeedData
 
                     if (authorWithUrl?.ImageUrl != null)
                     {
-                        using (var fileStream = File.OpenRead(Path.Combine(basePath, @$"StaticFiles\images\authors\{authorWithUrl.ImageUrl}")))
+                        using (var fileStream = File.OpenRead(Path.Combine(basePath, @$"StaticFiles\Images\Authors\{authorWithUrl.ImageUrl}")))
                         {
                             var uploadResult = await cloudImageService.UploadImageAsync(new UploadImageParam { FileStream = fileStream, FileName = authorWithUrl.ImageUrl });
-                            author.Image = new Image
-                            {
-                                PublicId = uploadResult.PublicId,
-                                Url = uploadResult.Url
-                            };
+                            if (uploadResult != null)
+                                author.Image = new Image
+                                {
+                                    PublicId = uploadResult.PublicId,
+                                    Url = uploadResult.Url
+                                };
                         }
                     }
                     context.Authors.Add(author);
