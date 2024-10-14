@@ -41,6 +41,10 @@ namespace API.Dtos.Book
         public int Price { get; set; }
 
         [Required(ErrorMessage = RequiredErrorMessage)]
+        [Range(0, 100, ErrorMessage = @"{RangeErrorMessage} và nhỏ hơn {2}")]
+        public int Discount { get; set; }
+
+        [Required(ErrorMessage = RequiredErrorMessage)]
         [Range(0, int.MaxValue, ErrorMessage = RangeErrorMessage)]
         public int QuantityInStock { get; set; }
 

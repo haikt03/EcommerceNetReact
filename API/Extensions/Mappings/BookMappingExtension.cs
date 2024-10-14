@@ -21,6 +21,7 @@ namespace API.Extensions.Mappings
                 Form = book.Form,
                 Description = book.Description,
                 Price = book.Price,
+                Discount = book.Discount,
                 QuantityInStock = book.QuantityInStock,
                 CategoryName = book.Category?.Name,
                 AuthorName = book.Author?.FullName,
@@ -48,6 +49,7 @@ namespace API.Extensions.Mappings
                     Form = bookDto.Form,
                     Description = bookDto.Description,
                     Price = bookDto.Price,
+                    Discount = bookDto.Discount,
                     QuantityInStock = bookDto.QuantityInStock,
                     CategoryId = bookDto.CategoryId,
                     AuthorId = bookDto.AuthorId
@@ -64,6 +66,7 @@ namespace API.Extensions.Mappings
             book.Form = bookDto.Form;
             book.Description = bookDto.Description;
             book.Price = bookDto.Price;
+            book.Discount = bookDto.Discount;
             book.QuantityInStock = bookDto.QuantityInStock;
             book.CategoryId = bookDto.CategoryId;
             book.AuthorId = bookDto.AuthorId;
