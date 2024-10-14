@@ -12,6 +12,7 @@
         public required string Form { get; set; }
         public required string Description { get; set; }
         public int Price { get; set; }
+        public int Discount { get; set; }
         public int QuantityInStock { get; set; }
 
         public Image? Image { get; set; }

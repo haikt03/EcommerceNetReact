@@ -250,6 +250,7 @@ namespace Infrastructure.Migrations
                     Form = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
+                    Discount = table.Column<int>(type: "int", nullable: false),
                     QuantityInStock = table.Column<int>(type: "int", nullable: false),
                     Image_PublicId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image_Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -280,8 +281,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, null, "Member", "MEMBER" },
-                    { 2, null, "Admin", "ADMIN" }
+                    { 1, null, "Admin", "ADMIN" },
+                    { 2, null, "Customer", "CUSTOMER" }
                 });
 
             migrationBuilder.CreateIndex(

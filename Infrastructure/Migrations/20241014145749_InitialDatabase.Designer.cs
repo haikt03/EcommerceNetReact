@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241014092318_InitialDatabase")]
+    [Migration("20241014145749_InitialDatabase")]
     partial class InitialDatabase
     {
         /// <inheritdoc />
@@ -58,14 +58,14 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Member",
-                            NormalizedName = "MEMBER"
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
                         });
                 });
 
@@ -202,6 +202,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Discount")
+                        .HasColumnType("int");
 
                     b.Property<string>("Form")
                         .IsRequired()
