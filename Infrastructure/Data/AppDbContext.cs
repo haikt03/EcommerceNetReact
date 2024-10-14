@@ -1,10 +1,11 @@
 ﻿using Core.Entities;
 using Infrastructure.Data.Configurations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUser, AppRole, int>
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {
@@ -13,6 +14,7 @@ namespace Infrastructure.Data
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<UserAddress> UserAddresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,15 +38,24 @@ namespace Infrastructure.Data
         private void UpdateTimestamps()
         {
             var entries = ChangeTracker.Entries()
-                .Where(e => e.Entity is BaseEntity && (e.State == EntityState.Added || e.State == EntityState.Modified));
+                .Where(e => (e.Entity is BaseEntity || e.Entity is AppUser) && (e.State == EntityState.Added || e.State == EntityState.Modified));
 
             foreach (var entry in entries)
             {
-                var entity = (BaseEntity)entry.Entity;
-                if (entry.State == EntityState.Added)
-                    entity.CreatedAt = DateTime.Now;
-                if (entry.State == EntityState.Modified)
-                    entity.ModifiedAt = DateTime.Now;
+                if (entry.Entity is BaseEntity baseEntity)
+                {
+                    if (entry.State == EntityState.Added)
+                        baseEntity.CreatedAt = DateTime.UtcNow;
+                    if (entry.State == EntityState.Modified)
+                        baseEntity.ModifiedAt = DateTime.UtcNow;
+                }
+                else if (entry.Entity is AppUser user)
+                {
+                    if (entry.State == EntityState.Added)
+                        user.CreatedAt = DateTime.UtcNow;
+                    if (entry.State == EntityState.Modified)
+                        user.ModifiedAt = DateTime.UtcNow;
+                }
             }
         }
     }

@@ -24,10 +24,10 @@ namespace Infrastructure.Data.Configurations
             builder.OwnsOne(b => b.Image);
 
             builder
-                    .HasOne(b => b.Author)
-                    .WithMany(a => a.Books)
-                    .HasForeignKey(b => b.AuthorId)
-                    .OnDelete(DeleteBehavior.SetNull);
+                .HasOne(b => b.Author)
+                .WithMany(a => a.Books)
+                .HasForeignKey(b => b.AuthorId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .HasOne(b => b.Category)
