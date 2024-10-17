@@ -10,12 +10,12 @@ namespace Infrastructure.Services
     {
         private readonly Cloudinary _cloudinary;
 
-        public CloudImageService(IConfiguration config)
+        public CloudImageService(IConfiguration configuration)
         {
             var account = new Account(
-                config["Cloudinary:CloudName"],
-                config["Cloudinary:ApiKey"],
-                config["Cloudinary:ApiSecret"]
+                configuration["Cloudinary:CloudName"],
+                configuration["Cloudinary:ApiKey"],
+                configuration["Cloudinary:ApiSecret"]
             );
             _cloudinary = new Cloudinary(account);
         }

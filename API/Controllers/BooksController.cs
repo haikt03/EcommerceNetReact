@@ -1,5 +1,4 @@
-﻿using API.Dtos.Author;
-using API.Dtos.Book;
+﻿using API.Dtos.Book;
 using API.Extensions;
 using API.Extensions.Mappings;
 using Core.Entities;

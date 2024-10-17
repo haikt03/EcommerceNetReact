@@ -61,8 +61,18 @@ namespace Infrastructure.Extensions
 
             var result = sort switch
             {
+                "name" => query.OrderBy(b => b.Name),
+                "nameDesc" => query.OrderByDescending(b => b.Name),
+                "publishedYear" => query.OrderBy(b => b.PublishedYear),
+                "publishedYearDesc" => query.OrderByDescending(b => b.PublishedYear),
                 "price" => query.OrderBy(b => b.Price),
                 "priceDesc" => query.OrderByDescending(b => b.Price),
+                "priceAfterDiscount" => query.OrderBy(b => b.Price - b.Price * b.Discount / 100),
+                "priceAfterDiscountDesc" => query.OrderByDescending(b => b.Price - b.Price * b.Discount / 100),
+                "discount" => query.OrderBy(b => b.Discount),
+                "discountDesc" => query.OrderByDescending(b => b.Discount),
+                "quantityInStock" => query.OrderBy(b => b.QuantityInStock),
+                "quantityInStockDesc" => query.OrderByDescending(b => b.QuantityInStock),
                 _ => query.OrderBy(b => b.Name)
             };
 

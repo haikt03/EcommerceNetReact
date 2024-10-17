@@ -8,10 +8,10 @@ namespace Infrastructure.Data.Configurations
     {
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
-            builder.HasKey(e => e.Id);
-            builder.Property(e => e.Id).ValueGeneratedOnAdd();
-            builder.Property(e => e.CreatedAt).IsRequired();
-            builder.Property(e => e.ModifiedAt).IsRequired(false);
+            builder.HasKey(be => be.Id);
+            builder.Property(be => be.Id).ValueGeneratedOnAdd();
+            builder.Property(be => be.CreatedAt).IsRequired();
+            builder.Property(be => be.ModifiedAt).IsRequired(false);
         }
     }
 }

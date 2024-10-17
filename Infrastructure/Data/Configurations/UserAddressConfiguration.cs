@@ -9,12 +9,12 @@ namespace Infrastructure.Data.Configurations
         {
             base.Configure(builder);
 
-            builder.Property(a => a.City).IsRequired();
-            builder.Property(a => a.District).IsRequired();
-            builder.Property(a => a.Ward).IsRequired();
-            builder.Property(a => a.Street).IsRequired();
-            builder.Property(a => a.Alley).IsRequired();
-            builder.Property(a => a.HouseNumber).IsRequired();
+            builder.Property(ua => ua.City).IsRequired();
+            builder.Property(ua => ua.District).IsRequired();
+            builder.Property(ua => ua.Ward).IsRequired();
+            builder.Property(ua => ua.Street).IsRequired();
+            builder.Property(ua => ua.Alley).IsRequired();
+            builder.Property(ua => ua.HouseNumber).IsRequired();
         }
     }
 }

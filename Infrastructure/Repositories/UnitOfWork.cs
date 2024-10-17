@@ -15,9 +15,7 @@ namespace Infrastructure.Repositories
         }
 
         public IBookRepository bookRepo { get; private set; }
-
         public IAuthorRepository authorRepo { get; private set; }
-
         public ICategoryRepository categoryRepo { get; private set; }
 
         public async Task<bool> CompleteAsync()

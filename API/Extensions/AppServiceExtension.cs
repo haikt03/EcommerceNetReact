@@ -1,5 +1,4 @@
-﻿using CloudinaryDotNet.Actions;
-using Core.Entities;
+﻿using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
@@ -9,15 +8,20 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
+
 namespace API.Extensions
 {
     public static class AppServiceExtension
     {
-        public static IServiceCollection AddApplicationService(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddApplicationService(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddControllers();
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
+
             services.AddDbContext<AppDbContext>(opt =>
             {
-                opt.UseSqlServer(config.GetConnectionString("Default"));
+                opt.UseSqlServer(configuration.GetConnectionString("Default"));
             });
 
             services
@@ -27,7 +31,7 @@ namespace API.Extensions
                 })
                 .AddRoles<AppRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWTSettings:TokenKey"]!));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTSettings:TokenKey"]!));
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
@@ -50,6 +54,7 @@ namespace API.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<ICloudImageService, CloudImageService>();
+            services.AddScoped<ITokenService, TokenService>();
 
             services.AddCors();
 
