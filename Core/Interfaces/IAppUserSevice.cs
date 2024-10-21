@@ -13,5 +13,10 @@ namespace Core.Interfaces
         Task<bool> UpdateAsync(AppUser user);
         Task<bool> RemoveAsync(AppUser user);
         Task<bool> ChangePasswordAsync(AppUser user, string currentPassword, string newPassword);
+        Task<bool> SendResetPasswordEmailAsync(AppUser user, string callbackUrl);
+        Task<bool> ResetPasswordAsync(AppUser user, string token, string newPassword);
+        Task<bool> SendConfirmationEmailAsync(AppUser user, string callbackUrl);
+        Task<bool> ConfirmEmailAsync(AppUser user, string token);
+
     }
 }

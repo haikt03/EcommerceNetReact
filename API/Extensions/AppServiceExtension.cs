@@ -55,6 +55,8 @@ namespace API.Extensions
 
             services.AddScoped<ICloudImageService, CloudImageService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IAppUserSevice, AppUserService>();
 
             services.AddCors();
 

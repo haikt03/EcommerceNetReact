@@ -22,13 +22,17 @@ namespace Infrastructure.Services
         }
         public async Task<string> GenerateAccessToken(AppUser user)
         {
+            if (user.UserName == null)
+                throw new ArgumentNullException("UserName not found");
+            if (user.Email == null)
+                throw new ArgumentNullException("Email not found");
             var claims = new List<Claim>()
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName!),
-                new Claim(ClaimTypes.Email, user.Email!)
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Email, user.Email)
             };
 
             var roles = await _userManager.GetRolesAsync(user);
